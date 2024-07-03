@@ -1,8 +1,19 @@
-import app from "./app.js";
+import express from "express";
+import morgan from "morgan";
+import { connection } from "./database/database.js";
+import languageRoutes from "./routes/language.routes.js";
 
-const main = () => {
-    app.listen(app.get("port"));
-    console.log(`Server running on port ${app.get("port")}`);
-};
+const app = express();
 
-main();
+const port = 3000;
+
+app.use(morgan("dev"));
+
+//routes
+app.use(languageRoutes);
+
+connection();
+
+app.listen(3000, () => {
+    console.log(`server run in http://localhost:${port}`)
+});
